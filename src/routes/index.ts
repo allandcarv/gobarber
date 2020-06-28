@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import appointmentsRouter from './appointments.routes';
 import sessionsRouter from './sessions.routes';
 import usersRouter from './users.routes';

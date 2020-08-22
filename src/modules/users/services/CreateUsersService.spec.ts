@@ -1,3 +1,4 @@
+import FakeBCryptHashProvider from '../providers/HashProvider/fakes/FakeBCryptHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import CreateUsersService from './CreateUserService';
 import AppError from '@shared/errors/AppError';
@@ -5,7 +6,8 @@ import AppError from '@shared/errors/AppError';
 describe('CreateUsersService', () => {
     it('should be able to create a new user', async () => {
         const fakeUsersRepository = new FakeUsersRepository();
-        const createUsersService = new CreateUsersService(fakeUsersRepository);
+        const fakeHashProvider = new FakeBCryptHashProvider();
+        const createUsersService = new CreateUsersService(fakeUsersRepository, fakeHashProvider);
 
         const user = await createUsersService.execute({
             email: 'user@example.com',
@@ -19,7 +21,8 @@ describe('CreateUsersService', () => {
 
     it('should not be able to create new user with an exist email', async() => {
         const fakeUsersRepository = new FakeUsersRepository();
-        const createUsersService = new CreateUsersService(fakeUsersRepository);
+        const fakeHashProvider = new FakeBCryptHashProvider();
+        const createUsersService = new CreateUsersService(fakeUsersRepository, fakeHashProvider);
 
         await createUsersService.execute({
             email: 'user@example.com',
